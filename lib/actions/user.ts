@@ -12,3 +12,15 @@ export async function getUserInfo(params?: any) {
         return { success: true, message: "Invalid User", data: [] }
     }
 }
+
+export async function createNewEmployee(params: any) {
+    const db = await getDb();
+    try {
+
+        const result = await db.collection('Employees').insertOne(params);
+
+        return { success: true, message: "Successfully retrieved" }
+    } catch (error) {
+        return { success: false, message: "Server Error" }
+    }
+}

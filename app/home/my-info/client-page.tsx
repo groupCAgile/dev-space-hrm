@@ -3,8 +3,12 @@
 import { Avatar, AvatarBadge, Button, Input } from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function MyInfoClientPage({ user }) {
+  const router = useRouter();
+
   const formatDate = (date: Date) => {
     const d = new Date(date);
     const month = `${d.getMonth() + 1}`.padStart(2, "0");
@@ -14,9 +18,9 @@ export default function MyInfoClientPage({ user }) {
   };
 
   const [formData, setFormData] = useState({
-    fullName: user.first_name || "",
-    nationalId: user.nic || "",
-    dob: user.date_of_birth ? formatDate(user.date_of_birth) : "",
+    first_name: user.first_name || "",
+    nic: user.nic || "",
+    date_of_birth: user.date_of_birth ? formatDate(user.date_of_birth) : "",
     address: user.address || "",
     position: user.position || "",
     role: user.role || "",
@@ -30,8 +34,36 @@ export default function MyInfoClientPage({ user }) {
     }));
   };
 
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/employee", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          employeeId: user.employee_id,
+          data: formData,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (data.success) {
+        toast.success("Successfully updated details!");
+      } else {
+        toast.error("Could not update, Try again!");
+      }
+    } catch (error) {
+      toast.error("Could not update, Try again!");
+      console.error("Error updating employee", error);
+    }
+  };
+
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex items-center justify-center mt-14">
       <div className="w-2/5 h-auto shadow-2xl p-10">
         <div className="flex justify-between items-center">
           <h1 className="font-semibold text-xl mb-4">Personal Info</h1>
@@ -39,43 +71,46 @@ export default function MyInfoClientPage({ user }) {
         </div>
         <div className="flex justify-between">
           <div>
-            <form className="flex flex-col space-y-3">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="fullName">Full Name</label>
+                  <label htmlFor="first_name">Full Name</label>
                   <Input
-                    id="fullName"
+                    id="first_name"
                     type="text"
                     placeholder="Full Name"
                     required
-                    value={formData.fullName}
+                    value={formData.first_name}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="nationalId">National ID</label>
+                  <label htmlFor="nic">National ID</label>
                   <Input
-                    id="nationalId"
+                    id="nic"
                     type="text"
                     placeholder="National ID number"
                     required
-                    value={formData.nationalId}
+                    value={formData.nic}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
               <div>
                 <div className="mb-2 block">
-                  <label htmlFor="dob">Date of Birth</label>
+                  <label htmlFor="date_of_birth">Date of Birth</label>
                   <Input
-                    id="dob"
+                    id="date_of_birth"
                     type="date"
                     placeholder="DD/MM/YY"
                     required
-                    value={formData.dob}
+                    value={formData.date_of_birth}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
@@ -89,6 +124,7 @@ export default function MyInfoClientPage({ user }) {
                     required
                     value={formData.address}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
@@ -101,6 +137,7 @@ export default function MyInfoClientPage({ user }) {
                     required
                     value={formData.position}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
@@ -113,10 +150,16 @@ export default function MyInfoClientPage({ user }) {
                     required
                     value={formData.role}
                     onChange={handleChange}
+                    isRequired
                   />
                 </div>
               </div>
-              <Button colorScheme="blue" variant="solid" className="w-2/3">
+              <Button
+                colorScheme="blue"
+                variant="solid"
+                className="w-2/3"
+                type="submit"
+              >
                 Update
               </Button>
             </form>

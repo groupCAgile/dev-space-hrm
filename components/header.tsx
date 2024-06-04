@@ -5,12 +5,14 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <nav className="bg-gray-100 flex justify-between items-center h-14 p-4 shadow">
+    <nav className="bg-gray-100 flex fixed justify-between items-center h-14 p-4 shadow w-full z-10">
       {/* Logo and Company Name */}
-      <div className="flex items-center space-x-2">
-        <img src="/assets/logo2.png" alt="Logo" className="h-6 w-auto" />
-        <span className="text-gray-700 text-base font-bold">DevSpace</span>
-      </div>
+      <Link href={"/home"}>
+        <div className="flex items-center space-x-2">
+          <img src="/assets/logo2.png" alt="Logo" className="h-8 w-auto pl-4" />
+          <span className="text-gray-700 text-base font-bold">DevSpace</span>
+        </div>
+      </Link>
 
       {/* Icons and User Info */}
       <div className="flex items-center space-x-10">
