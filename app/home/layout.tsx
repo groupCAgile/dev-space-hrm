@@ -1,3 +1,5 @@
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
 import { redirect } from "next/navigation";
 
 export default async function WalletLayout({
@@ -5,5 +7,11 @@ export default async function WalletLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return (
+    <div className="h-screen flex flex-col antialiased">
+      <Header />
+      <Sidebar />
+      <div className="h-full w-full">{children}</div>
+    </div>
+  );
 }
