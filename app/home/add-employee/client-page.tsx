@@ -234,7 +234,7 @@ export default function AddEmployeeClientPage() {
               required
               placeholder="Ex: +94 079 000 0000"
               type="number"
-              pattern="[0-9+ ]*"
+              pattern="^\+?\d{10}$"
             />
           </div>
           <div className="flex-1 flex flex-col min-w-[181px]">
@@ -293,7 +293,7 @@ export default function AddEmployeeClientPage() {
               required
               placeholder="Ex: +94 079 000 0000"
               type="number"
-              pattern="[0-9+ ]*"
+              pattern="^\+?\d{10}$"
             />
           </div>
         </div>
