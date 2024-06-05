@@ -1395,7 +1395,7 @@ array-union@^2.1.0:
 
 array.prototype.findlast@^1.2.4:
   version "1.2.5"
-  resolved "https://registry.npmjs.org/array.prototype.findlast/-/array.prototype.findlast-1.2.5.tgz"
+  resolved "https://registry.yarnpkg.com/array.prototype.findlast/-/array.prototype.findlast-1.2.5.tgz#3e4fbcb30a15a7f5bf64cf2faae22d139c2e4904"
   integrity sha512-CVvd6FHg1Z3POpBLxO6E6zr+rSKEQ9L6rZHAaY7lLfhKsWYUBBOuMs0e9o24oopj6H+geRCX0YJ+TJLBK2eHyQ==
   dependencies:
     call-bind "^1.0.7"
@@ -3064,7 +3064,7 @@ object.groupby@^1.0.1:
 
 object.hasown@^1.1.3:
   version "1.1.4"
-  resolved "https://registry.npmjs.org/object.hasown/-/object.hasown-1.1.4.tgz"
+  resolved "https://registry.yarnpkg.com/object.hasown/-/object.hasown-1.1.4.tgz#e270ae377e4c120cdcb7656ce66884a6218283dc"
   integrity sha512-FZ9LZt9/RHzGySlBARE3VF+gE26TxR38SdmqOqliuTnl9wrKulaQs+4dee1V+Io8VfxqzAfHu6YuRgUy8OHoTg==
   dependencies:
     define-properties "^1.2.1"
@@ -3588,7 +3588,7 @@ string-width@^5.0.1, string-width@^5.1.2:
 
 string.prototype.matchall@^4.0.10:
   version "4.0.11"
-  resolved "https://registry.npmjs.org/string.prototype.matchall/-/string.prototype.matchall-4.0.11.tgz"
+  resolved "https://registry.yarnpkg.com/string.prototype.matchall/-/string.prototype.matchall-4.0.11.tgz#1092a72c59268d2abaad76582dccc687c0297e0a"
   integrity sha512-NUdh0aDavY2og7IbBPenWqR9exH+E26Sv8e0/eTe1tltDGZL+GtBkDAnnyBtmekfK6/Dq3MkcGtzXFEd1LQrtg==
   dependencies:
     call-bind "^1.0.7"
