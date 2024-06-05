@@ -145,6 +145,8 @@ export default function AddEmployeeClientPage() {
               variant="filled"
               required
               placeholder="Ex: 000000000V"
+              type="text"
+              pattern="^\d{10}$|^\d{9}V$"
             />
           </div>
           <div className="flex-1 flex flex-col min-w-[181px]">
@@ -183,6 +185,7 @@ export default function AddEmployeeClientPage() {
               className="flex-1 font-inter text-sm min-w-[133px] px-[15px]"
               variant="filled"
               placeholder="Select Gender"
+              required
             >
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -200,6 +203,7 @@ export default function AddEmployeeClientPage() {
               className="flex-1 font-inter text-sm min-w-[133px] px-[15px]"
               variant="filled"
               placeholder="Select Marital Status"
+              required
             >
               <option value="single">Single</option>
               <option value="married">Married</option>
@@ -229,6 +233,8 @@ export default function AddEmployeeClientPage() {
               variant="filled"
               required
               placeholder="Ex: +94 079 000 0000"
+              type="number"
+              pattern="[0-9+ ]*"
             />
           </div>
           <div className="flex-1 flex flex-col min-w-[181px]">
@@ -241,6 +247,7 @@ export default function AddEmployeeClientPage() {
               variant="filled"
               required
               placeholder="Ex: johndoe@xyz.mail"
+              type="email"
             />
           </div>
         </div>
@@ -285,6 +292,8 @@ export default function AddEmployeeClientPage() {
               variant="filled"
               required
               placeholder="Ex: +94 079 000 0000"
+              type="number"
+              pattern="[0-9+ ]*"
             />
           </div>
         </div>
@@ -310,6 +319,7 @@ export default function AddEmployeeClientPage() {
               className="flex-1 font-inter text-sm min-w-[133px] px-[15px]"
               variant="filled"
               placeholder="Select Department"
+              required
             >
               <option value="HR">HR</option>
               <option value="Engineering">Engineering</option>
@@ -340,6 +350,7 @@ export default function AddEmployeeClientPage() {
               className="flex-1 font-inter text-sm min-w-[133px] px-[15px]"
               variant="filled"
               placeholder="Select Current Status"
+              required
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
