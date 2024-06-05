@@ -26,9 +26,19 @@ export default function NoticeAllClientPage() {
                 <h1 className="text-2xl font-bold">Add Notice</h1>
             </div>
             <div className="flex flex-col items-start justify-start gap-[40px] max-w-full text-xs pb-10">
+                <div className="self-stretch flex-1 flex flex-col items-start justify-start min-w-full">
+                    <h4 className="text-sm font-regular leading-[28px]">Notice Title</h4>
+                    <Input
+                        id="address"
+                        className="flex-1 font-inter text-sm min-w-[133px] py-2.5 px-[15px]"
+                        variant="filled"
+                        required
+                        placeholder="Enter notice title"
+                    />
+                </div>
                 <div className="self-stretch flex flex-row flex-wrap gap-[40px]">
                     <div className="flex-1 flex flex-col min-w-[133px]">
-                        <h4 className="text-sm font-regular leading-[40px]">Enter your Notice</h4>
+                        <h4 className="text-sm font-regular leading-[40px]">Message</h4>
                         <Textarea
                             id="firstName"
                             className="flex-1 font-inter text-sm min-w-[133px] py-2.5 px-[15px]"
