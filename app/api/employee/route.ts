@@ -52,6 +52,7 @@ export async function PUT(request: Request) {
         const db = await getDb();
 
         const { employeeId, data } = await request.json();
+        console.log(employeeId)
         console.log(data);
 
         const result = await db.collection('Employees').updateOne(
