@@ -45,7 +45,7 @@ export default function EmployeeClientPage(){
     <div className="min-h-screen flex justify-center">
       <div className="max-w-xl mt-20 ml-44 mb-5 w-full bg-white shadow-lg rounded-lg">
         <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">All Employees</h1>
+          <h1 className="text-2xl font-bold mb-4">Employee</h1>
           <div className="relative mb-4 bg-blue-50 rounded-lg">
             <input
               type="text"
@@ -66,20 +66,23 @@ export default function EmployeeClientPage(){
             </Alert> : 
             <div className="overflow-y-auto">
               {employees.map((employee) => (
-                <div
-                  key={employee._id}
-                  className="flex items-center p-2 mb-2 bg-blue-50 rounded-lg"
-                >
-                  <img
-                    src={employee.imgSrc}
-                    alt={employee.first_name +" "+ employee.last_name}
-                    className="w-10 h-10 rounded-full"
-                  />
-                  <div className="ml-3">
-                    <h2 className="text-sm font-semibold">{employee.first_name +" "+ employee.last_name}</h2>
-                    <p className="text-xs text-gray-600">{employee.position}</p>
+                <a href={`./update-employee?id=${employee._id}&fname=${employee.first_name}&lname=${employee.last_name}&img=${employee.imgSrc}&pos=${employee.position}&address=${employee.address}&role=${employee.role}&nic=${employee.nic}&dob=${employee.date_of_birth}`}>
+                  <div
+                    key={employee._id}
+                    className="emp-entry flex items-center p-2 mb-2 bg-blue-50 rounded-lg"
+                    
+                  >
+                    <img
+                      src={employee.imgSrc}
+                      alt={employee.first_name +" "+ employee.last_name}
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <div className="ml-3">
+                      <h2 className="text-sm font-semibold">{employee.first_name +" "+ employee.last_name}</h2>
+                      <p className="text-xs text-gray-600">{employee.position}</p>
+                    </div>
                   </div>
-                </div>
+                </a>
               ))}
             </div>
           }
