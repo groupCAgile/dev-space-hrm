@@ -1,13 +1,23 @@
 "use client";
 
-import { Avatar, AvatarBadge, Button, Input, Select } from "@chakra-ui/react";
+import { Avatar, AvatarBadge, Button, Input, Select,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton, useDisclosure } from "@chakra-ui/react";
 import { FaRegTrashAlt, FaChevronLeft } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function UpdateEmployeePage({ user }) {
+export default function UpdateEmployeePage({ user }: any) {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -18,7 +28,7 @@ export default function UpdateEmployeePage({ user }) {
   };
 
   const getQueryParams = () => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       return {
         id: params.get("id"),
@@ -43,7 +53,7 @@ export default function UpdateEmployeePage({ user }) {
     address: "",
     position: "",
     role: "",
-    img:"",
+    img: "",
   });
 
   useEffect(() => {
@@ -52,7 +62,9 @@ export default function UpdateEmployeePage({ user }) {
       first_name: queryParams.fname || "",
       last_name: queryParams.lname || "",
       nic: queryParams.nic || "",
-      date_of_birth: queryParams.date_of_birth ? formatDate(queryParams.date_of_birth) : "",
+      date_of_birth: queryParams.date_of_birth
+        ? formatDate(queryParams.date_of_birth)
+        : "",
       address: queryParams.address || "",
       position: queryParams.position || "",
       role: queryParams.role || "",
@@ -60,7 +72,7 @@ export default function UpdateEmployeePage({ user }) {
     });
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -69,6 +81,7 @@ export default function UpdateEmployeePage({ user }) {
   };
 
   const handleSubmit = async (e: any) => {
+    const queryParams = getQueryParams();
     e.preventDefault();
     try {
       const response = await fetch("/api/employee", {
@@ -77,15 +90,15 @@ export default function UpdateEmployeePage({ user }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          employeeId: user.employee_id,
+          employeeId: queryParams.id,
           data: formData,
         }),
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (data.success) {
+        router.push("/home/view-employee");
         toast.success("Successfully updated details!");
       } else {
         toast.error("Could not update, Try again!");
@@ -101,10 +114,17 @@ export default function UpdateEmployeePage({ user }) {
       <div className="w-2/5 h-auto shadow-2xl p-10">
         <div className="flex justify-between items-center">
           <div className="flex">
-            <a href={"./view-employee"}><FaChevronLeft className="" size={20} color="black" cursor="pointer" /></a>
+            <Link href={"./view-employee"}>
+              <FaChevronLeft
+                className=""
+                size={20}
+                color="black"
+                cursor="pointer"
+              />
+            </Link>
             <h1 className="ms-5 font-semibold text-xl mb-4">Employee</h1>
           </div>
-          <FaRegTrashAlt size={20} color="red" cursor="pointer" />
+          <FaRegTrashAlt size={20} color="red" cursor="pointer"  onClick={onOpen}/>
         </div>
         <div className="mt-5 flex justify-between">
           <div>
@@ -117,7 +137,7 @@ export default function UpdateEmployeePage({ user }) {
                     type="text"
                     placeholder="Full Name"
                     required
-                    value={formData.first_name} 
+                    value={formData.first_name}
                     onChange={handleChange}
                     isRequired
                   />
@@ -181,11 +201,18 @@ export default function UpdateEmployeePage({ user }) {
               <div>
                 <div className="mb-2 block">
                   <label htmlFor="role">Role</label>
-                  <Select placeholder='Select option' value={formData.role} onChange={handleChange} isRequired required>
-                    <option value='Admin'>Admin</option>
-                    <option value='Manager'>Manager</option>
-                    <option value='User'>User</option>
-                   </Select>
+                  <Select
+                    id="role"
+                    placeholder="Select option"
+                    value={formData.role}
+                    onChange={handleChange}
+                    isRequired
+                    required
+                  >
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="User">User</option>
+                  </Select>
                 </div>
               </div>
               <Button
@@ -199,16 +226,38 @@ export default function UpdateEmployeePage({ user }) {
             </form>
           </div>
           <div>
-            <Avatar
-              size="2xl"
-              name="Segun Adebayo"
-              src={formData.img}
-            >
+            <Avatar size="2xl" name="Segun Adebayo" src={formData.img}>
               <AvatarBadge boxSize="0.75em" bg="green.500" />
             </Avatar>
           </div>
         </div>
       </div>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                Confirmation
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+                Are you sure you want to delete {formData.first_name} {formData.last_name} ?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                No
+              </Button>
+              <Button colorScheme='red' onClick={onClose} ml={3}>
+                Yes
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </div>
   );
 }

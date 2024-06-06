@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-export default function MyInfoClientPage({ user }) {
+export default function MyInfoClientPage({ user }: any) {
   const router = useRouter();
 
   const formatDate = (date: Date) => {
@@ -26,7 +26,7 @@ export default function MyInfoClientPage({ user }) {
     role: user.role || "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -144,11 +144,18 @@ export default function MyInfoClientPage({ user }) {
               <div>
                 <div className="mb-2 block">
                   <label htmlFor="role">Role</label>
-                  <Select placeholder='Select option' value={formData.role} onChange={handleChange} isRequired required>
-                    <option value='Admin'>Admin</option>
-                    <option value='Manager'>Manager</option>
-                    <option value='User'>User</option>
-                   </Select>
+                  <Select
+                    id="role"
+                    placeholder="Select option"
+                    value={formData.role}
+                    onChange={handleChange}
+                    isRequired
+                    required
+                  >
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="User">User</option>
+                  </Select>
                 </div>
               </div>
               <Button
