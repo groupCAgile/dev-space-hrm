@@ -1,15 +1,15 @@
 "use client";
 
 import { Avatar, AvatarBadge, Button, Input, Select } from "@chakra-ui/react";
-import { FaRegTrashAlt } from "react-icons/fa";
-import React, { useState } from "react";
+import { FaRegTrashAlt, FaChevronLeft } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-export default function MyInfoClientPage({ user }) {
+export default function UpdateEmployeePage({ user }) {
   const router = useRouter();
 
-  const formatDate = (date: Date) => {
+  const formatDate = (date) => {
     const d = new Date(date);
     const month = `${d.getMonth() + 1}`.padStart(2, "0");
     const day = `${d.getDate()}`.padStart(2, "0");
@@ -17,14 +17,48 @@ export default function MyInfoClientPage({ user }) {
     return [year, month, day].join("-");
   };
 
+  const getQueryParams = () => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        id: params.get("id"),
+        fname: params.get("fname"),
+        lname: params.get("lname"),
+        nic: params.get("nic"),
+        date_of_birth: params.get("dob"),
+        address: params.get("address"),
+        position: params.get("pos"),
+        role: params.get("role"),
+        img: params.get("img"),
+      };
+    }
+    return {};
+  };
+
   const [formData, setFormData] = useState({
-    first_name: user.first_name || "",
-    nic: user.nic || "",
-    date_of_birth: user.date_of_birth ? formatDate(user.date_of_birth) : "",
-    address: user.address || "",
-    position: user.position || "",
-    role: user.role || "",
+    first_name: "",
+    last_name: "",
+    nic: "",
+    date_of_birth: "",
+    address: "",
+    position: "",
+    role: "",
+    img:"",
   });
+
+  useEffect(() => {
+    const queryParams = getQueryParams();
+    setFormData({
+      first_name: queryParams.fname || "",
+      last_name: queryParams.lname || "",
+      nic: queryParams.nic || "",
+      date_of_birth: queryParams.date_of_birth ? formatDate(queryParams.date_of_birth) : "",
+      address: queryParams.address || "",
+      position: queryParams.position || "",
+      role: queryParams.role || "",
+      img: queryParams.img || "",
+    });
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -66,10 +100,13 @@ export default function MyInfoClientPage({ user }) {
     <div className="w-full h-full flex items-center justify-center mt-14">
       <div className="w-2/5 h-auto shadow-2xl p-10">
         <div className="flex justify-between items-center">
-          <h1 className="font-semibold text-xl mb-4">Personal Info</h1>
+          <div className="flex">
+            <a href={"./view-employee"}><FaChevronLeft className="" size={20} color="black" cursor="pointer" /></a>
+            <h1 className="ms-5 font-semibold text-xl mb-4">Employee</h1>
+          </div>
           <FaRegTrashAlt size={20} color="red" cursor="pointer" />
         </div>
-        <div className="flex justify-between">
+        <div className="mt-5 flex justify-between">
           <div>
             <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div>
@@ -80,7 +117,7 @@ export default function MyInfoClientPage({ user }) {
                     type="text"
                     placeholder="Full Name"
                     required
-                    value={formData.first_name}
+                    value={formData.first_name} 
                     onChange={handleChange}
                     isRequired
                   />
@@ -165,7 +202,7 @@ export default function MyInfoClientPage({ user }) {
             <Avatar
               size="2xl"
               name="Segun Adebayo"
-              src="https://bit.ly/dan-abramov"
+              src={formData.img}
             >
               <AvatarBadge boxSize="0.75em" bg="green.500" />
             </Avatar>
