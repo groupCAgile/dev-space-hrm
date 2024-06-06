@@ -1,6 +1,13 @@
 "use client";
 
-import { Avatar, AvatarBadge, Button, Input, Select } from "@chakra-ui/react";
+import { Avatar, AvatarBadge, Button, Input, Select,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    AlertDialogCloseButton, useDisclosure } from "@chakra-ui/react";
 import { FaRegTrashAlt, FaChevronLeft } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -9,8 +16,10 @@ import Link from "next/link";
 
 export default function UpdateEmployeePage({ user }: any) {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = React.useRef()
 
-  const formatDate = (date: string) => {
+  const formatDate = (date) => {
     const d = new Date(date);
     const month = `${d.getMonth() + 1}`.padStart(2, "0");
     const day = `${d.getDate()}`.padStart(2, "0");
@@ -115,7 +124,7 @@ export default function UpdateEmployeePage({ user }: any) {
             </Link>
             <h1 className="ms-5 font-semibold text-xl mb-4">Employee</h1>
           </div>
-          <FaRegTrashAlt size={20} color="red" cursor="pointer" />
+          <FaRegTrashAlt size={20} color="red" cursor="pointer"  onClick={onOpen}/>
         </div>
         <div className="mt-5 flex justify-between">
           <div>
@@ -223,6 +232,32 @@ export default function UpdateEmployeePage({ user }: any) {
           </div>
         </div>
       </div>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                Confirmation
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+                Are you sure you want to delete {formData.first_name} {formData.last_name} ?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                No
+              </Button>
+              <Button colorScheme='red' onClick={onClose} ml={3}>
+                Yes
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </div>
   );
 }
