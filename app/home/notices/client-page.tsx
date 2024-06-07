@@ -54,7 +54,7 @@ export default function NoticeAllClientPage() {
         <div className="self-stretch flex-1 flex flex-col items-start justify-start min-w-full">
           <h4 className="text-sm font-regular leading-[28px]">Notice Title</h4>
           <Input
-            id="address"
+            id="title"
             className="flex-1 font-inter text-sm min-w-[133px] py-2.5 px-[15px]"
             variant="filled"
             required
@@ -66,7 +66,7 @@ export default function NoticeAllClientPage() {
           <div className="flex-1 flex flex-col min-w-[133px]">
             <h4 className="text-sm font-regular leading-[40px]">Message</h4>
             <Textarea
-              id="firstName"
+              id="message"
               className="flex-1 font-inter text-sm min-w-[133px] py-2.5 px-[15px]"
               variant="filled"
               required
