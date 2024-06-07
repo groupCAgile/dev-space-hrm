@@ -21,12 +21,12 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
   },
   {
     title: "Leave Requests",
-    path: "/leave-requests",
+    path: "/home/leave-requests",
     icon: <ImBriefcase />,
   },
   {
     title: "Assign Roles",
-    path: "/assign-roles",
+    path: "/home/assign-roles",
     icon: <MdAssignmentInd />,
   },
   {
@@ -36,7 +36,7 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
   },
   {
     title: "Payroll",
-    path: "/payroll",
+    path: "/home/payroll",
     icon: <MdPayments />,
   },
   {

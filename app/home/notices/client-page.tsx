@@ -59,6 +59,7 @@ export default function NoticeAllClientPage() {
             variant="filled"
             required
             placeholder="Enter notice title"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -72,13 +73,23 @@ export default function NoticeAllClientPage() {
               required
               placeholder="Type your message here ..."
               size="md"
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
           </div>
         </div>
       </div>
       <div className="flex flex-row justify-end gap-[16px] max-w-full pb-10">
-        <Button name="reset" id="reset" colorScheme="blue" variant="outline">
+        <Button
+          onClick={() => {
+            setMessage("");
+            setTitle("");
+          }}
+          name="reset"
+          id="reset"
+          colorScheme="blue"
+          variant="outline"
+        >
           Reset
         </Button>
         <Button
