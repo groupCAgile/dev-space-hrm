@@ -7,7 +7,6 @@ export async function GET(request: Request) {
         const db = await getDb();
 
         const { employeeId } = await request.json();
-
         const payrollCollection = db.collection("payroll");
         const payroll = await payrollCollection.find({ employee_id: employeeId }).toArray();
         if (payroll && payroll.length > 0) {
@@ -57,7 +56,7 @@ export async function PUT(request: Request) {
 
         const result = await db.collection('payroll').updateOne(
             {
-                employee_id: employeeId
+                emp_id: employeeId
             },
             { $set: data }
         );
