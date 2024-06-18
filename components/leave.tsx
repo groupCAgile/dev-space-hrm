@@ -3,14 +3,14 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 export default function Leave() {
-  const [notices, setNotices] = useState<any[]>([]);
+  const [leaves, setLeaves] = useState<any[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const loadNotices = async () => {
+  const loadLeaves = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/notice", {
+      const res = await fetch("/api/leave", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export default function Leave() {
       const data = await res.json();
 
       if (data.success) {
-        setNotices(data.data);
+        setLeaves(data.data);
       } else {
         setError(data.message);
       }
@@ -32,7 +32,7 @@ export default function Leave() {
   };
 
   useEffect(() => {
-    loadNotices();
+    loadLeaves();
   }, []);
 
   if (loading) {
@@ -43,35 +43,37 @@ export default function Leave() {
     );
   }
 
+  if (leaves.length === 0) {
+    return (
+      <>
+        <h1>No Leaves today</h1>
+      </>
+    );
+  }
+
   return (
     <>
-      <div className="flex justify-between items-center mb-3">
-        <Text as="b" fontSize="xl">
-          Employees on Leave Today
-        </Text>
-        <Link href={"/home/view-employee"}>
-          <Button colorScheme="blue">View All Employees</Button>
-        </Link>
-      </div>
       <div className="flex flex-col w-auto h-4/5 space-y-2">
-        <div className="bg-[#F4F7FF] p-2">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
-              <div>
-                <Text as="b">Jaden Jansz</Text>
-                <Text fontSize="xs" color="gray">
-                  Software Engineer
+        {leaves.map((leave) => (
+          <div key={leave._id} className="bg-[#F4F7FF] p-2">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                <div>
+                  <Text as="b">{leave.employee_name}</Text>
+                  <Text fontSize="xs" color="gray">
+                    {leave.position}
+                  </Text>
+                </div>
+              </div>
+              <div className="bg-red-500 p-1 rounded-md">
+                <Text as="b" color="white">
+                  {leave.range}
                 </Text>
               </div>
             </div>
-            <div className="bg-red-500 p-1 rounded-md">
-              <Text as="b" color="white">
-                FULL DAY
-              </Text>
-            </div>
           </div>
-        </div>
+        ))}
       </div>
     </>
   );
