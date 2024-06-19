@@ -40,6 +40,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     icon: <MdPayments />,
   },
   {
+    title: "Allowances",
+    path: "/home/allowances",
+    icon: <MdPayments />,
+  },
+  {
     title: "Logout",
     path: "/login",
     icon: <IoLogOut />,
