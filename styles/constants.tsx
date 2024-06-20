@@ -25,6 +25,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     icon: <ImBriefcase />,
   },
   {
+    title: "Today's Leaves",
+    path: "/home/leave-requests-today",
+    icon: <ImBriefcase />,
+  },
+  {
     title: "Assign Roles",
     path: "/home/assign-roles",
     icon: <MdAssignmentInd />,
