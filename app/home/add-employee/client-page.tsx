@@ -88,7 +88,7 @@ export default function AddEmployeeClientPage() {
       className="self-stretch shadow-lg p-10 rounded-lg bg-grayscale-0 flex flex-col ml-72 mr-40 justify-center my-20 pl-6 box-border gap-[24px] max-w-full lg:pt-5 lg:pb-5 lg:box-border"
     >
       <div className="flex flex-row gap-[16px] pb-10">
-        <a>
+        <a className="cursor-pointer" onClick={() => router.back()}>
           <ArrowBackIcon color="blue.500" boxSize="28px" />
         </a>
         <h1 className="text-2xl font-bold">Add Employee</h1>
