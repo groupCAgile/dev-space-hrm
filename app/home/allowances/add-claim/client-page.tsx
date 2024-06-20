@@ -12,10 +12,8 @@ export default function AddPayrollPage() {
 
   const [formData, setFormData] = useState({
     emp_id: "",
-    acc_no: "",
-    acc_name: "",
-    bank: "",
-    branch: "",
+    allo_type: "",
+    amount: "",
   });
 
   const handleChange = (
@@ -31,7 +29,7 @@ export default function AddPayrollPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/payroll", {
+      const response = await fetch("/api/allowances", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,9 +41,9 @@ export default function AddPayrollPage() {
 
       if (data.success) {
         toast.success("Successfully added information!");
-        router.push("/home/payroll");
+        router.push("/home/allowances");
       } else {
-        toast.error("Could not add information, Try again!");
+        toast.error(data.message);
       }
     } catch (error) {
       toast.error("Could not add information, Try again!");
@@ -81,25 +79,25 @@ export default function AddPayrollPage() {
                   />
                 </div>
               </div>
-             
-             
+
               <div>
                 <div className="mb-2 block">
                   <label htmlFor="allowance-type">Allowance Type</label>
                   <Select
-                    id="allo-type"
+                    id="allo_type"
                     placeholder="Select the type"
                     required
                     isRequired
-                    value={formData.bank}
+                    value={formData.allo_type}
                     onChange={handleChange}
                   >
                     <option value="Educational">Educational Allowance</option>
                     <option value="Maternity">Maternity Allowance</option>
                     <option value="Health">Health Bonus</option>
                     <option value="Lieu-Leave">Lieu Leave Conversion</option>
-                    <option value="Entertainment">Entertainment Allowance</option>
-
+                    <option value="Entertainment">
+                      Entertainment Allowance
+                    </option>
                   </Select>
                 </div>
               </div>
@@ -112,7 +110,7 @@ export default function AddPayrollPage() {
                     placeholder="Enter allowance amount in $"
                     required
                     isRequired
-                    value={formData.branch}
+                    value={formData.amount}
                     onChange={handleChange}
                   />
                 </div>
