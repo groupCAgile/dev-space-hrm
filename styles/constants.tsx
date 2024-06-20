@@ -30,11 +30,6 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     icon: <ImBriefcase />,
   },
   {
-    title: "Assign Roles",
-    path: "/home/assign-roles",
-    icon: <MdAssignmentInd />,
-  },
-  {
     title: "Notices",
     path: "/home/notices",
     icon: <IoNewspaperSharp />,
