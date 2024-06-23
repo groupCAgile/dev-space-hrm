@@ -1,13 +1,20 @@
 "use client";
 
-import { Avatar, AvatarBadge, Button, Input, Select,
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,
-    AlertDialogCloseButton, useDisclosure } from "@chakra-ui/react";
+import {
+  Avatar,
+  AvatarBadge,
+  Button,
+  Input,
+  Select,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { FaRegTrashAlt, FaChevronLeft } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -16,8 +23,8 @@ import Link from "next/link";
 
 export default function UpdateEmployeePage({ user }: any) {
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef();
 
   const formatDate = (date) => {
     const d = new Date(date);
@@ -109,6 +116,33 @@ export default function UpdateEmployeePage({ user }: any) {
     }
   };
 
+  const handleDelete = async () => {
+    const queryParams = getQueryParams();
+    try {
+      const response = await fetch("/api/employee", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          employeeId: queryParams.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        router.push("/home/view-employee");
+        toast.success("Successfully deleted!");
+      } else {
+        toast.error("Could not delete, Try again!");
+      }
+    } catch (error) {
+      toast.error("Could not delete, Try again!");
+      console.error("Error deleting employee", error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex items-center justify-center mt-14">
       <div className="w-2/5 h-auto shadow-2xl p-10">
@@ -124,7 +158,12 @@ export default function UpdateEmployeePage({ user }: any) {
             </Link>
             <h1 className="ms-5 font-semibold text-xl mb-4">Employee</h1>
           </div>
-          <FaRegTrashAlt size={20} color="red" cursor="pointer"  onClick={onOpen}/>
+          <FaRegTrashAlt
+            size={20}
+            color="red"
+            cursor="pointer"
+            onClick={onOpen}
+          />
         </div>
         <div className="mt-5 flex justify-between">
           <div>
@@ -239,19 +278,27 @@ export default function UpdateEmployeePage({ user }: any) {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                Confirmation
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Confirmation
             </AlertDialogHeader>
 
             <AlertDialogBody>
-                Are you sure you want to delete {formData.first_name} {formData.last_name} ?
+              Are you sure you want to delete {formData.first_name}{" "}
+              {formData.last_name} ?
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
                 No
               </Button>
-              <Button colorScheme='red' onClick={onClose} ml={3}>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  onClose();
+                  handleDelete();
+                }}
+                ml={3}
+              >
                 Yes
               </Button>
             </AlertDialogFooter>
