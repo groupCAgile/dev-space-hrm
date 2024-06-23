@@ -24,3 +24,16 @@ export async function createNewEmployee(params: any) {
         return { success: false, message: "Server Error" }
     }
 }
+
+export async function getPayrollInfo(id: string) {
+    const db = await getDb();
+
+    const payrollCollection = db.collection("payroll");
+    const payroll = await payrollCollection.find({ emp_id: id }, { projection: { _id: 0 } }).toArray();
+
+    if (payroll) {
+        return { success: true, message: "Successfully retrieved", data: payroll[0] }
+    } else {
+        return { success: true, message: "Invalid User", data: [] }
+    }
+}

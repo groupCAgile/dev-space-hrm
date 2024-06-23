@@ -25,9 +25,9 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
     icon: <ImBriefcase />,
   },
   {
-    title: "Assign Roles",
-    path: "/home/assign-roles",
-    icon: <MdAssignmentInd />,
+    title: "Today's Leaves",
+    path: "/home/leave-requests-today",
+    icon: <ImBriefcase />,
   },
   {
     title: "Notices",
@@ -37,6 +37,11 @@ export const SIDEBAR_ITEMS: SideBarItem[] = [
   {
     title: "Payroll",
     path: "/home/payroll",
+    icon: <MdPayments />,
+  },
+  {
+    title: "Allowances",
+    path: "/home/allowances",
     icon: <MdPayments />,
   },
   {

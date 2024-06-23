@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import Link from "next/link";
 
-export default function EmployeeClientPage() {
+export default function PayrollClientPage() {
   const [employees, setEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,9 +46,11 @@ export default function EmployeeClientPage() {
       <div className="max-w-xl mt-20 ml-44 mb-5 w-full bg-white shadow-lg rounded-lg">
         <div className="p-4">
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mb-4">Employee</h1>
-            <Link href={"/home/add-employee"}>
-              <Button colorScheme="blue">+ Add</Button>
+            <h1 className="text-2xl font-bold mb-4">
+              Employee Payroll Details
+            </h1>
+            <Link href={"/home/payroll/add-payroll"}>
+              <Button colorScheme="blue">+ Add New</Button>
             </Link>
           </div>
           <div className="relative mb-4 bg-blue-50 rounded-lg">
@@ -72,9 +74,12 @@ export default function EmployeeClientPage() {
           ) : (
             <div className="overflow-y-auto">
               {employees.map((employee) => (
-                <a
-                  key={employee.id}
-                  href={`./update-employee?id=${employee.employee_id}&fname=${employee.first_name}&lname=${employee.last_name}&img=${employee.imgSrc}&pos=${employee.position}&address=${employee.address}&role=${employee.role}&nic=${employee.nic}&dob=${employee.date_of_birth}`}
+                <Link
+                  key={employee.employee_id}
+                  href={{
+                    pathname: `payroll/update-payroll`,
+                    query: { id: employee.employee_id },
+                  }}
                 >
                   <div
                     key={employee._id}
@@ -94,7 +99,7 @@ export default function EmployeeClientPage() {
                       </p>
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -102,4 +107,4 @@ export default function EmployeeClientPage() {
       </div>
     </div>
   );
-}``
+}
