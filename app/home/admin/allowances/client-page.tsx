@@ -20,7 +20,7 @@ export default function PayrollClientPage() {
 
   const loadEmployees = async () => {
     try {
-      const res = await fetch("/api/employee", {
+      const res = await fetch("/api/allowances", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,11 +46,9 @@ export default function PayrollClientPage() {
       <div className="max-w-xl mt-20 ml-44 mb-5 w-full bg-white shadow-lg rounded-lg">
         <div className="p-4">
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mb-4">
-              Employee Payroll Details
-            </h1>
-            <Link href={"/home/payroll/add-payroll"}>
-              <Button colorScheme="blue">+ Add New</Button>
+            <h1 className="text-2xl font-bold mb-4">Employee Allowances</h1>
+            <Link href={"/home/admin/allowances/add-claim"}>
+              <Button colorScheme="blue">+ Add Claim</Button>
             </Link>
           </div>
           <div className="relative mb-4 bg-blue-50 rounded-lg">
@@ -74,32 +72,24 @@ export default function PayrollClientPage() {
           ) : (
             <div className="overflow-y-auto">
               {employees.map((employee) => (
-                <Link
-                  key={employee.employee_id}
-                  href={{
-                    pathname: `payroll/update-payroll`,
-                    query: { id: employee.employee_id },
-                  }}
+                <div
+                  key={employee._id}
+                  className="emp-entry flex items-center justify-between p-2 mb-2 bg-blue-50 rounded-lg"
                 >
-                  <div
-                    key={employee._id}
-                    className="emp-entry flex items-center p-2 mb-2 bg-blue-50 rounded-lg"
-                  >
-                    <img
-                      src={employee.imgSrc}
-                      alt={employee.first_name + " " + employee.last_name}
-                      className="w-10 h-10 rounded-full"
-                    />
+                  <div className="flex">
                     <div className="ml-3">
-                      <h2 className="text-sm font-semibold">
-                        {employee.first_name + " " + employee.last_name}
-                      </h2>
+                      <h2 className="text-sm font-semibold">{employee.name}</h2>
                       <p className="text-xs text-gray-600">
-                        {employee.position}
+                        {employee.allowType}
                       </p>
                     </div>
                   </div>
-                </Link>
+                  <div className="mr-2">
+                    <h2 className="text-sm font-semibold">
+                      $ {employee.amount}
+                    </h2>
+                  </div>
+                </div>
               ))}
             </div>
           )}

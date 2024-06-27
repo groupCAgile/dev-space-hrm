@@ -43,7 +43,7 @@ export default function AddPayrollPage() {
 
       if (data.success) {
         toast.success("Successfully added information!");
-        router.push("/home/payroll");
+        router.push("/home/admin/payroll");
       } else {
         toast.error("Could not add information, Try again!");
       }

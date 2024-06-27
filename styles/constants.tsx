@@ -8,40 +8,73 @@ import { IoLogOut } from "react-icons/io5";
 
 import { SideBarItem } from "./types";
 
-export const SIDEBAR_ITEMS: SideBarItem[] = [
+export const SIDEBAR_ITEMS_ADMIN: SideBarItem[] = [
   {
     title: "Dashboard",
-    path: "/home",
+    path: "/home/admin",
     icon: <MdSpaceDashboard />,
   },
   {
     title: "All Employees",
-    path: "/home/view-employee",
+    path: "/home/admin/view-employee",
     icon: <IoPeopleSharp />,
   },
   {
     title: "Leave Requests",
-    path: "/home/leave-requests",
+    path: "/home/admin/leave-requests",
     icon: <ImBriefcase />,
   },
   {
     title: "Today's Leaves",
-    path: "/home/leave-requests-today",
+    path: "/home/admin/leave-requests-today",
     icon: <ImBriefcase />,
   },
   {
     title: "Notices",
-    path: "/home/notices",
+    path: "/home/admin/notices",
     icon: <IoNewspaperSharp />,
   },
   {
     title: "Payroll",
-    path: "/home/payroll",
+    path: "/home/admin/payroll",
     icon: <MdPayments />,
   },
   {
     title: "Allowances",
-    path: "/home/allowances",
+    path: "/home/admin/allowances",
+    icon: <MdPayments />,
+  },
+  {
+    title: "Logout",
+    path: "/login",
+    icon: <IoLogOut />,
+  },
+];
+
+export const SIDEBAR_ITEMS_USER: SideBarItem[] = [
+  {
+    title: "Dashboard",
+    path: "/home/user",
+    icon: <MdSpaceDashboard />,
+  },
+  {
+    title: "All Employees",
+    path: "/home/user/view-employee",
+    icon: <IoPeopleSharp />,
+  },
+  {
+    title: "My Leaves",
+    path: "/home/user/leave-requests",
+    icon: <ImBriefcase />,
+  },
+  {
+    title: "Notices",
+    path: "/home/user/notices",
+    icon: <IoNewspaperSharp />,
+  },
+  {
+    title: "Allowances",
+    path: "/home/user/allowances",
     icon: <MdPayments />,
   },
   {

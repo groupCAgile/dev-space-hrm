@@ -9,7 +9,7 @@ export default function TimeTracking() {
         <Text as="b" fontSize="xl">
           Time Tracking (This Week)
         </Text>
-        <Link href={"/home/view-employee"}>
+        <Link href={"/home/admin/view-employee"}>
           <Button colorScheme="blue">View All</Button>
         </Link>
       </div>

@@ -47,7 +47,7 @@ export default function EmployeeClientPage() {
         <div className="p-4">
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mb-4">Employee</h1>
-            <Link href={"/home/add-employee"}>
+            <Link href={"/home/admin/add-employee"}>
               <Button colorScheme="blue">+ Add</Button>
             </Link>
           </div>

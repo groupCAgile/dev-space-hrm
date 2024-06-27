@@ -8,8 +8,12 @@ export async function POST(request: Request) {
 
         const userCollection = db.collection("users");
         const user = await userCollection.findOne({ username, password });
-        if (user) {
-            return new Response(JSON.stringify({ success: true, message: "Login successful" }), {
+        if (user.role === 'Admin') {
+            return new Response(JSON.stringify({ success: true, message: "Login successful", role: "Admin" }), {
+                status: 200,
+            })
+        } else if (user.role === 'User') {
+            return new Response(JSON.stringify({ success: true, message: "Login successful", role: "User" }), {
                 status: 200,
             })
         } else {

@@ -15,7 +15,7 @@ export default function HomeClientPage() {
           <Text as="b" fontSize="xl">
             Employees on Leave Today
           </Text>
-          <Link href={"/home/view-employee"}>
+          <Link href={"/home/admin/view-employee"}>
             <Button colorScheme="blue">View All Employees</Button>
           </Link>
         </div>

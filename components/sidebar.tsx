@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { SIDEBAR_ITEMS } from "@/styles/constants";
+import { SIDEBAR_ITEMS_ADMIN, SIDEBAR_ITEMS_USER } from "@/styles/constants";
 import { SideBarItem } from "@/styles/types";
 
 const MenuItem = ({ item }: { item: SideBarItem }) => {
@@ -38,25 +38,45 @@ const MenuItem = ({ item }: { item: SideBarItem }) => {
   );
 };
 
-export default function Sidebar() {
+export default function Sidebar({ user }: any) {
+  console.log(user);
   return (
     <div className="md:w-60 bg-blue-900 h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex mt-10">
-      <div className="flex flex-col w-full pt-10">
-        <div className="flex flex-col space-y-2 md:px-6">
-          {SIDEBAR_ITEMS.filter((item) => item.title !== "Logout").map(
-            (item, idx) => (
-              <MenuItem key={idx} item={item} />
-            )
-          )}
+      {user.includes("/home/admin") ? (
+        <div className="flex flex-col w-full pt-10">
+          <div className="flex flex-col space-y-2 md:px-6">
+            {SIDEBAR_ITEMS_ADMIN.filter((item) => item.title !== "Logout").map(
+              (item, idx) => (
+                <MenuItem key={idx} item={item} />
+              )
+            )}
+          </div>
+          <div className="flex flex-col space-y-2 md:px-6 mt-auto pb-32">
+            {SIDEBAR_ITEMS_ADMIN.filter((item) => item.title === "Logout").map(
+              (item, idx) => (
+                <MenuItem key={idx} item={item} />
+              )
+            )}
+          </div>
         </div>
-        <div className="flex flex-col space-y-2 md:px-6 mt-auto pb-32">
-          {SIDEBAR_ITEMS.filter((item) => item.title === "Logout").map(
-            (item, idx) => (
-              <MenuItem key={idx} item={item} />
-            )
-          )}
+      ) : (
+        <div className="flex flex-col w-full pt-10">
+          <div className="flex flex-col space-y-2 md:px-6">
+            {SIDEBAR_ITEMS_USER.filter((item) => item.title !== "Logout").map(
+              (item, idx) => (
+                <MenuItem key={idx} item={item} />
+              )
+            )}
+          </div>
+          <div className="flex flex-col space-y-2 md:px-6 mt-auto pb-32">
+            {SIDEBAR_ITEMS_USER.filter((item) => item.title === "Logout").map(
+              (item, idx) => (
+                <MenuItem key={idx} item={item} />
+              )
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

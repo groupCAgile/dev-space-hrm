@@ -51,7 +51,7 @@ export async function PUT(request: Request) {
 
         const result = await db.collection('leave-requests').updateOne({ employee_id: employeeId }, { $set: { status: "Approved" } });
         if (result.modifiedCount > 0) {
-            revalidatePath('/home/leave-requests')
+            revalidatePath('/home/admin/leave-requests')
             return new Response(JSON.stringify({ success: true, message: "Successfully inserted" }), {
                 status: 200,
             })

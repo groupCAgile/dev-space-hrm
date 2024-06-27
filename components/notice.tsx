@@ -49,7 +49,7 @@ export default function Notice() {
         <Text as="b" fontSize="xl">
           Notices for Employees
         </Text>
-        <Link href={"/home/notices"}>
+        <Link href={"/home/admin/notices"}>
           <Button colorScheme="blue">Add Notice</Button>
         </Link>
       </div>
