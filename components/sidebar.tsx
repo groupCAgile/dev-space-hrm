@@ -39,7 +39,6 @@ const MenuItem = ({ item }: { item: SideBarItem }) => {
 };
 
 export default function Sidebar({ user }: any) {
-  console.log(user);
   return (
     <div className="md:w-60 bg-blue-900 h-screen flex-1 fixed border-r border-zinc-200 hidden md:flex mt-10">
       {user.includes("/home/admin") ? (

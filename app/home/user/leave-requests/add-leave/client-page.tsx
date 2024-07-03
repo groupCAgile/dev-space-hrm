@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Input, Select, Textarea, Alert, AlertIcon, } from "@chakra-ui/react";
+import {
+  Button,
+  Input,
+  Select,
+  Textarea,
+  Alert,
+  AlertIcon,
+} from "@chakra-ui/react";
 import { FaRegTrashAlt } from "react-icons/fa";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -8,6 +15,45 @@ import { useRouter } from "next/navigation";
 import { ArrowBackIcon, InfoIcon } from "@chakra-ui/icons";
 
 export default function ApplyLeaveClientPage() {
+  const [type, setType] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
+  const [comment, setComment] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("/api/leave-request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          leave_type: type,
+          start_date: fromDate,
+          end_date: toDate,
+          reason: comment,
+          employee_id: "E126",
+          status: "Pending",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success("Successfully requested leave!");
+        setFromDate("");
+        setToDate("");
+        setComment("");
+      } else {
+        toast.error("Could not add, Try again!");
+      }
+    } catch (error) {
+      toast.error("Could not add, Try again!");
+      console.error("Error adding notice", error);
+    }
+  };
+
   return (
     <div className="w-full h-full flex items-center justify-center mt-4">
       <div className="w-2/5 h-auto shadow-2xl p-10">
@@ -18,14 +64,17 @@ export default function ApplyLeaveClientPage() {
             </a>
             <h1 className="text-xl font-bold">Apply Leave</h1>
           </div>
-          <Alert status='info' className="border-0 rounded-lg mb-8 text-sky-900">
+          <Alert
+            status="info"
+            className="border-0 rounded-lg mb-8 text-sky-900"
+          >
             <AlertIcon />
             You have 7 days of leave remaining!
           </Alert>
         </div>
         <div className="flex justify-between">
           <div>
-            <form className="flex flex-col space-y-3">
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-3">
               <div>
                 <div className="mb-2 block">
                   <label htmlFor="leave-type">Leave Type</label>
@@ -34,6 +83,7 @@ export default function ApplyLeaveClientPage() {
                     placeholder="Select the type"
                     required
                     isRequired
+                    onChange={(e) => setType(e.target.value)}
                   >
                     <option value="Casual">Casual Leave</option>
                     <option value="Medical">Medical Leave</option>
@@ -45,6 +95,7 @@ export default function ApplyLeaveClientPage() {
                 <div className="mb-2 block">
                   <label htmlFor="from">From Date</label>
                   <Input
+                    onChange={(e) => setFromDate(e.target.value)}
                     id="from"
                     type="date"
                     required
@@ -54,6 +105,7 @@ export default function ApplyLeaveClientPage() {
                 <div className="mb-2 block">
                   <label htmlFor="to-date">To Date</label>
                   <Input
+                    onChange={(e) => setToDate(e.target.value)}
                     id="to_date"
                     type="date"
                     required
@@ -70,11 +122,17 @@ export default function ApplyLeaveClientPage() {
                     required
                     placeholder="Type your message here ..."
                     size="md"
+                    onChange={(e) => setComment(e.target.value)}
                   />
                 </div>
               </div>
               <div className="flex flex-row justify-end gap-[16px] max-w-full pt-10">
-                <Button name="cancel" id="cancel" colorScheme="blue" variant="outline">
+                <Button
+                  name="cancel"
+                  id="cancel"
+                  colorScheme="blue"
+                  variant="outline"
+                >
                   Cancel
                 </Button>
                 <Button
