@@ -1,6 +1,6 @@
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoPeopleSharp } from "react-icons/io5";
-import { ImBriefcase } from "react-icons/im";
+import { ImBriefcase, ImClock2 } from "react-icons/im";
 import { MdAssignmentInd } from "react-icons/md";
 import { IoNewspaperSharp } from "react-icons/io5";
 import { MdPayments } from "react-icons/md";
@@ -73,6 +73,11 @@ export const SIDEBAR_ITEMS_USER: SideBarItem[] = [
     title: "My Leaves",
     path: "/home/user/leave-requests",
     icon: <ImBriefcase />,
+  },
+  {
+    title: "Punch Time",
+    path: "/home/user/punch-time",
+    icon: <ImClock2 />,
   },
   {
     title: "Notices",
