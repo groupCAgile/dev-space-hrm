@@ -1,6 +1,20 @@
 "use client";
 
-import { Button, Tag, TagLabel, Table, Thead, Tbody, Tr, Th, Td, TableContainer, Stat, StatNumber, StatHelpText, } from "@chakra-ui/react";
+import {
+  Button,
+  Tag,
+  TagLabel,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Stat,
+  StatNumber,
+  StatHelpText,
+} from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { SearchIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
@@ -9,12 +23,46 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 
 export default function LeaveClientPage() {
+  const [leaves, setLeaves] = useState<any[]>([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const loadLeaves = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/leave-request?employeeId=E126", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setLeaves(data.data);
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadLeaves();
+  }, []);
+
   return (
     <div className="p-8 bg-white-600 min-h-screen shadow-[0_3px_10px_rgb(0,0,0,0.2)] mt-20 ml-64 mr-8 max-w-full">
       <div className="flex justify-between mb-4">
         <h1 className="text-xl font-bold">My Leaves</h1>
         <Link href={"/home/user/leave-requests/add-leave"}>
-          <Button size="sm" colorScheme="blue">+ Apply Leave</Button>
+          <Button size="sm" colorScheme="blue">
+            + Apply Leave
+          </Button>
         </Link>
       </div>
 
@@ -43,9 +91,9 @@ export default function LeaveClientPage() {
 
       <div className="overflow-x-auto">
         <TableContainer>
-          <Table variant='simple'>
+          <Table variant="simple">
             <Thead className="text-xs font-medium text-gray-100">
-              <Tr >
+              <Tr>
                 <Th>Apply Date</Th>
                 <Th>Leave Type</Th>
                 <Th>From Date</Th>
@@ -53,27 +101,31 @@ export default function LeaveClientPage() {
                 <Th>No of Days</Th>
                 <Th>Leave Balance</Th>
                 <Th>Status</Th>
-                <Th>Leave Reason</Th>
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>2024-06-30</Td>
-                <Td>Medical Leave</Td>
-                <Td>July 02</Td>
-                <Td>July 02</Td>
-                <Td>1 Day</Td>
-                <Td>8 Days</Td>
-                <Td><Tag
-                  size="md"
-                  key="md"
-                  variant="subtle"
-                  colorScheme="yellow"
-                >
-                  <TagLabel>Pending</TagLabel>
-                </Tag></Td>
-                <Td>Medical Appointment</Td>
-              </Tr>
+              {leaves.map((leave) => (
+                <Tr key={leave._id}>
+                  <Td>{leave.start_date}</Td>
+                  <Td>{leave.leave_type}</Td>
+                  <Td>{leave.start_date}</Td>
+                  <Td>{leave.end_date}</Td>
+                  <Td>{leave.no_days}</Td>
+                  <Td>{leave.leave_balance}</Td>
+                  <Td>
+                    <Tag
+                      size="md"
+                      key="md"
+                      variant="subtle"
+                      colorScheme={
+                        leave.status === "Approved" ? "green" : "yellow"
+                      }
+                    >
+                      <TagLabel>{leave.status}</TagLabel>
+                    </Tag>
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </TableContainer>
