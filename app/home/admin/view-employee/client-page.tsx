@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import Link from "next/link";
 
-export default function PayrollClientPage() {
+export default function EmployeeClientPage() {
   const [employees, setEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,11 +46,9 @@ export default function PayrollClientPage() {
       <div className="max-w-xl mt-20 ml-44 mb-5 w-full bg-white shadow-lg rounded-lg">
         <div className="p-4">
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mb-4">
-              Employee Payroll Details
-            </h1>
-            <Link href={"/home/payroll/add-payroll"}>
-              <Button colorScheme="blue">+ Add New</Button>
+            <h1 className="text-2xl font-bold mb-4">Employee</h1>
+            <Link href={"/home/admin/add-employee"}>
+              <Button colorScheme="blue">+ Add</Button>
             </Link>
           </div>
           <div className="relative mb-4 bg-blue-50 rounded-lg">
@@ -74,12 +72,9 @@ export default function PayrollClientPage() {
           ) : (
             <div className="overflow-y-auto">
               {employees.map((employee) => (
-                <Link
-                  key={employee.employee_id}
-                  href={{
-                    pathname: `payroll/update-payroll`,
-                    query: { id: employee.employee_id },
-                  }}
+                <a
+                  key={employee.id}
+                  href={`./update-employee?id=${employee.employee_id}&fname=${employee.first_name}&lname=${employee.last_name}&img=${employee.imgSrc}&pos=${employee.position}&address=${employee.address}&role=${employee.role}&nic=${employee.nic}&dob=${employee.date_of_birth}`}
                 >
                   <div
                     key={employee._id}
@@ -99,7 +94,7 @@ export default function PayrollClientPage() {
                       </p>
                     </div>
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
           )}

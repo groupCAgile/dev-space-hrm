@@ -47,7 +47,7 @@ export default function PayrollClientPage() {
         <div className="p-4">
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mb-4">Employee Allowances</h1>
-            <Link href={"/home/allowances/add-claim"}>
+            <Link href={"/home/admin/allowances/add-claim"}>
               <Button colorScheme="blue">+ Add Claim</Button>
             </Link>
           </div>

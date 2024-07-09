@@ -41,7 +41,7 @@ export default function AddPayrollPage() {
 
       if (data.success) {
         toast.success("Successfully added information!");
-        router.push("/home/allowances");
+        router.push("/home/admin/allowances");
       } else {
         toast.error(data.message);
       }

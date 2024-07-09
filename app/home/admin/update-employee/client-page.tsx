@@ -105,7 +105,7 @@ export default function UpdateEmployeePage({ user }: any) {
       const data = await response.json();
 
       if (data.success) {
-        router.push("/home/view-employee");
+        router.push("/home/admin/view-employee");
         toast.success("Successfully updated details!");
       } else {
         toast.error("Could not update, Try again!");
@@ -132,7 +132,7 @@ export default function UpdateEmployeePage({ user }: any) {
       const data = await response.json();
 
       if (data.success) {
-        router.push("/home/view-employee");
+        router.push("/home/admin/view-employee");
         toast.success("Successfully deleted!");
       } else {
         toast.error("Could not delete, Try again!");

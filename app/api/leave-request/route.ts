@@ -11,7 +11,7 @@ export async function GET(request: Request) {
         const leavesCollection = db.collection("leave-requests");
 
         if (employeeId) {
-            const leave = await leavesCollection.findOne({ employee_id: employeeId });
+            const leave = await leavesCollection.find({ employee_id: employeeId }).toArray();
 
             if (leave) {
                 return new Response(JSON.stringify({ success: true, message: "Successfully retrieved", data: leave }), {
@@ -51,11 +51,36 @@ export async function PUT(request: Request) {
 
         const result = await db.collection('leave-requests').updateOne({ employee_id: employeeId }, { $set: { status: "Approved" } });
         if (result.modifiedCount > 0) {
-            revalidatePath('/home/leave-requests')
+            revalidatePath('/home/admin/leave-requests')
             return new Response(JSON.stringify({ success: true, message: "Successfully inserted" }), {
                 status: 200,
             })
 
+        } else {
+            return new Response(JSON.stringify({ success: false, message: "Could not add notice" }), {
+                status: 404,
+            })
+        }
+
+    } catch (error) {
+        return new Response(JSON.stringify({ success: false, message: "Internal Server Error" }), {
+            status: 500,
+        })
+    }
+}
+
+export async function POST(request: Request) {
+
+    try {
+        const db = await getDb();
+
+        const data = await request.json();
+
+        const result = await db.collection('leave-requests').insertOne(data);
+        if (result.insertedId) {
+            return new Response(JSON.stringify({ success: true, message: "Successfully inserted" }), {
+                status: 200,
+            })
         } else {
             return new Response(JSON.stringify({ success: false, message: "Could not add notice" }), {
                 status: 404,

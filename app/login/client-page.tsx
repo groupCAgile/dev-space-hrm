@@ -36,8 +36,10 @@ export default function LoginClientPage() {
 
       const data = await res.json();
 
-      if (data.success) {
-        router.push("/home");
+      if (data.success && data.role === "Admin") {
+        router.push("/home/admin");
+      } else if (data.success && data.role === "User") {
+        router.push("/home/user");
       } else {
         setError(data.message);
       }
